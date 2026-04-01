@@ -61,7 +61,7 @@ public class AdminRepository {
 	public void login(String email, String password) {
 	
 		
-		System.out.println(email+" "+password);
+		System.out.println(email);
 		
 		
 		
