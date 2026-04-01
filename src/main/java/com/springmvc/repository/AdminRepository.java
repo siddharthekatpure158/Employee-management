@@ -62,6 +62,7 @@ public class AdminRepository {
 	
 		
 		System.out.println(email);
+		System.out.println(password);
 		
 		
 		
