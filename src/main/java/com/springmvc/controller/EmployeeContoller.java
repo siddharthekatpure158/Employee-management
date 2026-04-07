@@ -136,6 +136,8 @@ public class EmployeeContoller {
 		
 		map.addAttribute("msg","Employee Not Founded");
 		map.addAttribute("emp",null);
+		
+		
 		return "update";
 		
 	}	
