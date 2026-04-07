@@ -122,6 +122,7 @@ public class EmployeeContoller {
 		if(admin!=null) {
 			return "update";
 		}
+		
 		return "login";
 	}
 	@PostMapping("/updateemp")
