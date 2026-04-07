@@ -85,6 +85,22 @@ body {
     box-shadow: 0 10px 25px rgba(79,70,229,0.3);
 }
 
+/* CREATE ACCOUNT LINK */
+.create-account {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.create-account a {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.create-account a:hover {
+    text-decoration: underline;
+}
+
 /* MESSAGE */
 .message {
     margin-bottom: 15px;
@@ -118,10 +134,12 @@ String msg = (String)request.getAttribute("msg");
 
     <!-- MESSAGE -->
     <% if(msg != null) { %>
-        <div class="message error"><%= msg %></div>
+        <div class="message <%= msg.contains("Success") ? "success" : "error" %>">
+            <%= msg %>
+        </div>
     <% } %>
 
-    <!-- FORM -->
+    <!-- LOGIN FORM -->
     <form action="./login" method="post">
 
         <div class="input-group">
@@ -137,6 +155,12 @@ String msg = (String)request.getAttribute("msg");
         <button type="submit" class="btn-login">Login</button>
 
     </form>
+
+    <!-- CREATE ACCOUNT LINK -->
+    <div class="create-account">
+        Don't have an account? 
+        <a href="signup">Create Account</a>
+    </div>
 
 </div>
 
