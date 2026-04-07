@@ -17,8 +17,8 @@ public class AdminService {
 		
 	}
 
-	public void login(String email, String password) {
-		repository.login(email,password);
+	public Admin login(String email, String password) {
+		return repository.login(email,password);
 		
 	}
 

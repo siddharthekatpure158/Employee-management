@@ -1,5 +1,7 @@
 package com.springmvc.repository;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.springmvc.model.Admin;
@@ -58,14 +60,21 @@ public class AdminRepository {
 		
 	}
 
-	public void login(String email, String password) {
-	
-		
-		System.out.println(email);
-		System.out.println(password);
-		
-		
-		
+	public Admin login(String email, String password) {
+	    openconnection();
+	    transaction.begin();
+	    String jpql="from Admin where email =:email and pass=:password";
+	    Query query=manager.createQuery(jpql);
+	    query.setParameter("email", email);
+	    query.setParameter("password", password);
+	    
+	    List<Admin> admin=query.getResultList();
+	    
+	    for(Admin a:admin) {
+	    	return a;
+	    }
+
+	   return null;
 	}
 
 }

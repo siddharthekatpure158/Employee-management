@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.springmvc.model.Admin;
 import com.springmvc.model.Employee;
 import com.springmvc.service.EmployeeService;
 
@@ -23,13 +25,19 @@ public class EmployeeContoller {
 	private EmployeeService service;
 	
 	@GetMapping("/home")
-	public String home() {
-		return "home";
+	public String home(@SessionAttribute(name="login",required=false) Admin admin) {
+		if(admin!=null) {
+			return "home";
+		}
+		return "login";
 	}
 	
 	@GetMapping("/add")
-	public String add() {
-		return "add";
+	public String add(@SessionAttribute(name="login",required=false) Admin admin) {
+		if(admin!=null) {
+			return "add";
+		}
+		return "login";
 	}
 	
 	@PostMapping("/addEmployee")
@@ -54,8 +62,11 @@ public class EmployeeContoller {
     }
 	
 	@GetMapping("/search")
-	public String search() {
-		return "search";
+	public String search(@SessionAttribute(name="login",required=false) Admin admin) {
+		if(admin!=null) {
+			return "search";
+		}
+		return "login";
 	}
 	
 	@PostMapping("/searchemp")
@@ -74,16 +85,19 @@ public class EmployeeContoller {
 		
 	}	
 	@GetMapping("/delete")
-	public String delete(ModelMap map ) {
-		List<Employee> emps=service.getallemployees();
-		if(!emps.isEmpty()) {
-			map.addAttribute("emps",emps);
-			map.addAttribute("msg", "Current Employees");
+	public String delete(ModelMap map,@SessionAttribute(name="login",required=false) Admin admin ) {
+		if(admin!=null) {
+			List<Employee> emps=service.getallemployees();
+			if(!emps.isEmpty()) {
+				map.addAttribute("emps",emps);
+				map.addAttribute("msg", "Current Employees");
+				return "delete";
+			}
+			map.addAttribute("emps",null);
+			map.addAttribute("msg", "No employees found");
 			return "delete";
 		}
-		map.addAttribute("emps",null);
-		map.addAttribute("msg", "No employees found");
-		return "delete";	
+		return "login";
 	}
 	
 	@PostMapping("/deleteemp")
@@ -104,8 +118,11 @@ public class EmployeeContoller {
 	}
 	
 	@GetMapping("/update")
-	public String update() {
-		return "update";
+	public String update(@SessionAttribute(name="login",required=false) Admin admin) {
+		if(admin!=null) {
+			return "update";
+		}
+		return "login";
 	}
 	@PostMapping("/updateemp")
 	public String updateemp( @RequestParam("id") int id,ModelMap map ) {

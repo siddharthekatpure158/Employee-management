@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.springmvc.model.Admin;
 import com.springmvc.service.AdminService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class AdminController {
 	
@@ -40,12 +42,22 @@ public class AdminController {
 	
 	@PostMapping("/login")
 	public String login(@RequestParam("password") String password,
-			@RequestParam("email") String email) {
+			@RequestParam("email") String email,HttpSession session) {
 		
-		service.login(email,password);
+		Admin admin=service.login(email,password);
+		if(admin!=null) {
+			session.setAttribute("login", admin);
+			session.setMaxInactiveInterval(30);
+			return "home";
+		}
 		
-		return "home";
+		return "login";
 		
+	}
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "login";
 	}
 
 }
